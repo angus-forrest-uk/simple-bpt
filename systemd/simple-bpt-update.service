@@ -1,0 +1,16 @@
+[Unit]
+Description=Check for a new Basic PAYE Tools release
+Documentation=https://github.com/angus-forrest-uk/simple-bpt
+
+[Service]
+Type=oneshot
+
+ExecStart=/opt/simple-bpt-src/build.sh --check
+
+DynamicUser=yes
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+CapabilityBoundingSet=

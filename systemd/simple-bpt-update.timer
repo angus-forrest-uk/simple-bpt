@@ -1,0 +1,11 @@
+[Unit]
+Description=Weekly check for a new Basic PAYE Tools release
+Documentation=https://github.com/angus-forrest-uk/simple-bpt
+
+[Timer]
+OnCalendar=weekly
+RandomizedDelaySec=6h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
