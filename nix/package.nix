@@ -60,7 +60,9 @@ stdenv.mkDerivation rec {
 
     python3 ${../inject-settings.py} $out/libexec/simple-bpt/rti.linux \
          simple_bpt_settings.py ${../simple_bpt_settings.py}
-    unzip -l $out/libexec/simple-bpt/rti.linux | grep -q simple_bpt_settings.py
+    listing="$(unzip -l $out/libexec/simple-bpt/rti.linux 2>/dev/null ||
+ true)"
+    echo "$listing" | grep -q simple_bpt_settings.py
     
     install -Dm755 ${../bin/simple-bpt} $out/bin/simple-bpt
     wrapProgram $out/bin/simple-bpt \

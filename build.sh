@@ -124,8 +124,9 @@ assemble() {
   log "injecting settings shim (relaxes ALLOWED_HOSTS, see simple_bpt_settings.py)"
   python3 "$ROOT/inject-settings.py" "$DIST/bptserver/rti.linux" \
    simple_bpt_settings.py "$ROOT/simple_bpt_settings.py"
-  unzip -l "$DIST/bptserver/rti.linux" | grep -q simple_bpt_settings.py \
- || die "settings shim not injected"
+  listing="$(unzip -l "$DIST/bptserver/rti.linux" 2>/dev/null || true)"
+  grep -q simple_bpt_settings.py <<<"$listing" \
+       || die "settings shim not injected"
 
   install -m 0755 "$ROOT/bin/simple-bpt" "$DIST/simple-bpt"
   printf '%s\n' "$version" > "$DIST/VERSION"
