@@ -58,6 +58,10 @@ stdenv.mkDerivation rec {
     [ -e $out/libexec/simple-bpt/sqlite3.db ] \
       || { echo "no seed database"; exit 1; }
 
+    python3 ${../inject-settings.py} $out/libexec/simple-bpt/rti.linux \
+         simple_bpt_settings.py ${../simple_bpt_settings.py}
+    unzip -l $out/libexec/simple-bpt/rti.linux | grep -q simple_bpt_settings.py
+    
     install -Dm755 ${../bin/simple-bpt} $out/bin/simple-bpt
     wrapProgram $out/bin/simple-bpt \
       --set BPT_SERVER_DIR $out/libexec/simple-bpt \

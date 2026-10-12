@@ -19,8 +19,7 @@ in
       default = "127.0.0.1";
       example = "100.64.0.2";
       description = ''
-        Address to bind. BPT has no authentication, and a non-loopback bind
-        sets Django's ALLOWED_HOSTS to `['*']`.
+        Address to bind. BPT has no authentication.
       '';
     };
 

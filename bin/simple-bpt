@@ -57,6 +57,11 @@ case "$BIND" in
     ;;
 esac
 
+# Upstream settings hardcode ALLOWED_HOSTS = ['127.0.0.1'], which 400s any
+# non-loopback Host header. Use our injected shim unless the operator
+# chose their own settings module.
+export DJANGO_SETTINGS_MODULE="${DJANGO_SETTINGS_MODULE:-simple_bpt_settings}"
+
 if [ -n "${BPT_LOADER:-}" ]; then
   exec "$BPT_LOADER" "$RTI" runserver "$BIND:$PORT" --noreload "$@"
 fi

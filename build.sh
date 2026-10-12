@@ -121,6 +121,12 @@ assemble() {
   chmod -R u+rwX "$DIST/bptserver"
   chmod +x "$DIST/bptserver/rti.linux"
 
+  log "injecting settings shim (relaxes ALLOWED_HOSTS, see simple_bpt_settings.py)"
+  python3 "$ROOT/inject-settings.py" "$DIST/bptserver/rti.linux" \
+   simple_bpt_settings.py "$ROOT/simple_bpt_settings.py"
+  unzip -l "$DIST/bptserver/rti.linux" | grep -q simple_bpt_settings.py \
+ || die "settings shim not injected"
+
   install -m 0755 "$ROOT/bin/simple-bpt" "$DIST/simple-bpt"
   printf '%s\n' "$version" > "$DIST/VERSION"
 
